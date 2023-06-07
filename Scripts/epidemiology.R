@@ -4,8 +4,8 @@
 load("Data/atp_final.RData")
 load("Data/wta_final.RData")
 
-atp <- atp_final[c("tourney_category", "year", "surface", "round_level", "score", "games", "retirement", "match_outcome", "mean_age", "dif_rank", "sex")]
-wta <- wta_final[c("tourney_category", "year", "surface", "round_level", "score", "games", "retirement", "match_outcome", "mean_age", "dif_rank", "sex")]
+atp <- atp_final[c("tourney_category", "year", "surface", "best_of", "round_level", "score", "games", "retirement", "match_outcome", "mean_age", "dif_rank", "sex")]
+wta <- wta_final[c("tourney_category", "year", "surface", "best_of", "round_level", "score", "games", "retirement", "match_outcome", "mean_age", "dif_rank", "sex")]
 
 ## Packages
 library(epiR)
