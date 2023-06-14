@@ -65,8 +65,9 @@ year <- as.numeric(rownames(t_year))
 plot(year,log_odd_year,xlab="Years",ylab="logodd",las=1, main="WTA")
 lines(lowess(log_odd_year~year), col=4, lwd=2)
 
-## 4. Poisson Regression
-### 4.1. ATP
+
+## 5. Poisson Regression
+### 5.1. ATP
 atp_sub <- atp[c(1,2,3,5,7,10,12,13)]
 atp_group <- atp_sub %>% 
   group_by(tourney_category,year,surface,round_level) %>%
@@ -74,19 +75,19 @@ atp_group <- atp_sub %>%
             games = sum(games),
             retirement_num = sum(retirement_num)
   )
-#### 4.1.1. Initial Model
+#### 5.1.1. Initial Model
 atp_poisson0 <- glm(retirement_num ~ tourney_category + year + surface + round_level + mean_age + year:mean_age, offset = log(games), family = "poisson", data = atp_group)
 summary(atp_poisson0)
-#### 4.1.2. Stepwise (AIC)
+#### 5.1.2. Stepwise (AIC)
 atp_poisson <- step(atp_poisson0)
 summary(atp_poisson)
-#### 4.1.3. Testing for overdispersion
+#### 5.1.3. Testing for overdispersion
 testDispersion(atp_poisson)
 sum(residuals(atp_poisson,type ="pearson")^2)/atp_poisson$df.residual
-#### 4.1.4. Negative Binomial Model
+#### 5.1.4. Negative Binomial Model
 atp_negbin <- glm.nb(retirement_num ~ tourney_category + year + surface + mean_age + year:mean_age + offset(log(games)), data = atp_group)
 summary(atp_negbin)
-#### 4.1.5. Results
+#### 5.1.5. Results
 summary(atp_poisson)$coefficients
 exp(cbind(IRR = coef(atp_poisson), confint(atp_poisson)))
 plot_model(atp_poisson, title="Number of Retirements", vline.color = "#4D4D4D")
