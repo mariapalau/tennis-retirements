@@ -16,23 +16,18 @@ library(ggplot2)
 ## 1. Retirement incidence through the years
 ### 1.1. ATP
 #### 1.1.1. Dataframe with number of retirements, number of games and incidence per year
-(retYear <- as.data.frame(table(atp$retirement, atp$year)))
-colnames(retYear)[1] <- 'retirement'
-colnames(retYear)[2] <- 'year'
-colnames(retYear)[3] <- 'N'
-retYear <- subset(retYear, retirement == TRUE)
+(retYearATP <- as.data.frame(table(atp$retirement, atp$year)))
+colnames(retYearATP)[1] <- 'retirement'
+colnames(retYearATP)[2] <- 'year'
+colnames(retYearATP)[3] <- 'N'
+retYearATP <- subset(retYearATP, retirement == TRUE)
 (totalgamesYear <- aggregate(games~year, data=atp, sum))
-retYear <- cbind(retYear, totalgamesYear$games)
-colnames(retYear)[4] <- 'games'
-retYear$incidence <- retYear$N/retYear$games*1000
+retYearATP <- cbind(retYearATP, totalgamesYear$games)
+colnames(retYearATP)[4] <- 'games'
+retYearATP$incidence <- retYearATP$N/retYearATP$games*1000
 
-#### 1.1.2. Number of retirements per year
-ggplot(retYear, aes(x=as.Date(year, format="%Y"), y=N)) +
-  geom_line(col = "#1874CD", lwd = 1) +
-  labs(x="Year", y="Number of retirements")
-
-#### 1.1.3. Retirement Incidence Rate per 1000 games
-ggplot(retYear, aes(x=as.Date(year, format="%Y"), y=incidence)) +
+#### 1.1.2. Retirement Incidence Rate per 1000 games
+ggplot(retYearATP, aes(x=as.Date(year, format="%Y"), y=incidence)) +
   geom_line(col = "#1874CD", lwd = 1) +
   labs(x="Year", y="Retirement Incidence Rate",
        title="ATP Incidence of Retirements by year") +
@@ -41,27 +36,31 @@ ggplot(retYear, aes(x=as.Date(year, format="%Y"), y=incidence)) +
 
 ### 1.2. WTA
 #### 1.2.1. Dataframe with number of retirements, number of games and incidence per year
-(retYear <- as.data.frame(table(wta$retirement, wta$year)))
-colnames(retYear)[1] <- 'retirement'
-colnames(retYear)[2] <- 'year'
-colnames(retYear)[3] <- 'N'
-retYear <- subset(retYear, retirement == TRUE)
+(retYearWTA <- as.data.frame(table(wta$retirement, wta$year)))
+colnames(retYearWTA)[1] <- 'retirement'
+colnames(retYearWTA)[2] <- 'year'
+colnames(retYearWTA)[3] <- 'N'
+retYearWTA <- subset(retYearWTA, retirement == TRUE)
 (totalgamesYear <- aggregate(games~year, data=wta, sum))
-retYear <- cbind(retYear, totalgamesYear$games)
-colnames(retYear)[4] <- 'games'
-retYear$incidence <- retYear$N/retYear$games*1000
+retYearWTA <- cbind(retYearWTA, totalgamesYear$games)
+colnames(retYearWTA)[4] <- 'games'
+retYearWTA$incidence <- retYearWTA$N/retYearWTA$games*1000
 
-#### 1.2.2. Number of retirements per year
-ggplot(retYear, aes(x=as.Date(year, format="%Y"), y=N)) +
-  geom_line(col = "#1874CD", lwd = 1) +
-  labs(x="Year", y="Number of retirements")
-
-#### 1.2.3. Retirement Incidence Rate per 1000 games
-ggplot(retYear, aes(x=as.Date(year, format="%Y"), y=incidence)) +
+#### 1.2.2. Retirement Incidence Rate per 1000 games
+ggplot(retYearWTA, aes(x=as.Date(year, format="%Y"), y=incidence)) +
   geom_line(col = "#1874CD", lwd = 1) +
   labs(x="Year", y="Retirement Incidence Rate",
        title="WTA Incidence of Retirements by year") +
   geom_smooth(col="#838B8B", lwd=0.6, se=FALSE, method='loess', formula=y~x)
+
+### 1.3. Combining ATP and WTA Incidence plots
+ggplot(retYearATP, aes(x=as.Date(year, format="%Y"), y=incidence)) +
+  geom_line(col = "#1874CD", lwd = 1) +
+  geom_smooth(col="#B0E2FF", lwd=0.6, se=FALSE, method='loess', formula=y~x) +
+  geom_line(data=retYearWTA, col = "#CD5555", lwd = 1) +
+  geom_smooth(data=retYearWTA, col="#FFB6C1", lwd=0.6, se=FALSE, method='loess', formula=y~x) +
+  labs(x="Year", y="Retirement Incidence Rate",
+       title="Incidence of Retirements by year")
 
 
 ## 2. Epidemiological measures
