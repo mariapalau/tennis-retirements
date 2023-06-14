@@ -51,6 +51,7 @@ plot(atpct)
 wtact <- party::ctree(retirement ~ tourney_category + year + surface + round_level + mean_age, data = wta, control = party::ctree_control(maxdepth=4))
 plot(wtact)
 
+
 ## 4. Linearity
 ### 4.1. ATP
 t_year <- table(atp$year,atp$retirement) 
