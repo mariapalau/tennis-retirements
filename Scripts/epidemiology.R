@@ -65,6 +65,14 @@ ggplot(retYearATP, aes(x=as.Date(year, format="%Y"), y=incidence)) +
 
 ## 2. Epidemiological measures
 ### 2.1. ATP
+ExpCustomStat(atp, Cvar = "retirement")
+sum(atp$games)
+IR<-19314/12343510
+confint <- qnorm(0.975)*sqrt(IR*(1-IR)/12343510)
+IR*1000
+(IR+confint)*1000
+(IR-confint)*1000
+
 #### 2.1.1. Tourney Category 
 ExpCustomStat(atp, Cvar = c("tourney_category", "retirement"))
 (retTourney <- table(atp$retirement, atp$tourney_category))
@@ -100,6 +108,14 @@ epi.2by2(dat = F_Qf, method = "cohort.time", digits = 2, conf.level = 0.95, unit
 
 
 ### 2.2. WTA
+ExpCustomStat(wta, Cvar = "retirement")
+sum(wta$games)
+IR<-7306/5381938
+confint <- qnorm(0.975)*sqrt(IR*(1-IR)/12343510)
+IR*1000
+(IR+confint)*1000
+(IR-confint)*1000
+
 #### 2.2.1. Tourney Category
 ExpCustomStat(wta, Cvar = c("tourney_category", "retirement"))
 (retTourney <- table(wta$retirement, wta$tourney_category))
