@@ -25,6 +25,48 @@ interaction.plot(x.factor = tennis$round_level, trace.factor = tennis$sex, respo
 interaction.plot(x.factor = tennis$surface, trace.factor = tennis$sex, response = tennis$retirement_num, xlab = "Surface", ylab = "Retirements", col=c("#4F94CD", "#00CD66"), lty=2, lwd=2.5)
 
 
+layout(matrix(c(1,2,3,3), ncol=2, byrow=TRUE), heights=c(4, 1))
+
+par(mai=rep(0.7, 4),cex.axis = 1.5,cex.lab = 1.5)
+
+# Figure 3.1: Interaction Plot para 'round_level'
+interaction.plot(
+  x.factor = tennis$round_level,
+  trace.factor = tennis$sex,
+  response = tennis$retirement_num,
+  xlab = "Round",
+  ylab = "Retirements",
+  col = c("#4F94CD", "#00CD66"),
+  lty = 2,
+  lwd = 2.5,
+  legend=F)
+
+# Figure 3.2: Interaction Plot para 'surface'
+interaction.plot(
+  x.factor = tennis$surface,
+  trace.factor = tennis$sex,
+  response = tennis$retirement_num,
+  xlab = "Surface",
+  ylab = "",
+  col = c("#4F94CD", "#00CD66"),
+  lty = 2,
+  lwd = 2.5,
+  legend = F
+)
+par(mai=c(0,0,0,0))
+plot.new()
+# Aggregate legend
+legend(x="top", inset=0,
+       legend = c("Male", "Female"),
+       col = c("#00CD66","#4F94CD"),
+       lty = 2,
+       lwd = 2.5,
+       title = NULL,
+       horiz = T,
+       cex = 1.5
+       )
+
+
 ## 2. Preparing covariables and setting references
 atp$tourney_category <- as.factor(atp$tourney_category)
 atp$surface <- as.factor(atp$surface)
